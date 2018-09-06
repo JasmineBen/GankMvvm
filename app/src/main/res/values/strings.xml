@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">FackGank</string>
+
+    <array name="study_tab">
+        <item>Android</item>
+        <item>iOS</item>
+        <item>拓展资源</item>
+        <item>前端</item>
+        <item>休息视频</item>
+    </array>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="author_format">来自:%s</string>
+    <string name="navigation_text">既然选择了远方,便只顾风雨兼程</string>
+    <string name="welfare">福利图片</string>
+</resources>
