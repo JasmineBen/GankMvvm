@@ -1,7 +1,7 @@
 package com.conan.gankmvvm.view.activities;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -22,14 +22,6 @@ import com.conan.gankmvvm.utils.Constants;
 import com.conan.gankmvvm.utils.LogUtil;
 import com.conan.gankmvvm.view.adapter.WelfareAdapter;
 import com.conan.gankmvvm.viewmodel.GankListViewModel;
-import com.conan.gankmvvm.viewmodel.ViewModelFactory;
-import com.conan.gankmvvm.widget.GankRecyclerView;
-import com.conan.gankmvvm.widget.WelfareItemDecoration;
-import com.conan.gankmvvm.data.network.GankApi;
-import com.conan.gankmvvm.model.GankList;
-import com.conan.gankmvvm.utils.AppUtil;
-import com.conan.gankmvvm.utils.Constants;
-import com.conan.gankmvvm.utils.LogUtil;
 import com.conan.gankmvvm.viewmodel.ViewModelFactory;
 import com.conan.gankmvvm.widget.GankRecyclerView;
 import com.conan.gankmvvm.widget.WelfareItemDecoration;
@@ -69,18 +61,6 @@ public class WelfareActivity extends BaseActivity implements SwipeRefreshLayout.
         mBinding = DataBindingUtil.setContentView(this,R.layout.welfare_layout);
         mViewModel = obtainViewModel();
         mBinding.setViewmodel(mViewModel);
-        mViewModel.getLoadMoreTaskEvent().observe(this, new Observer<GankList>() {
-            @Override
-            public void onChanged(@Nullable GankList gankList) {
-                fetchWelfareListSuccess(gankList,false);
-            }
-        });
-        mViewModel.getRefreshTaskEvent().observe(this, new Observer<GankList>() {
-            @Override
-            public void onChanged(@Nullable GankList gankList) {
-                fetchWelfareListSuccess(gankList,true);
-            }
-        });
         customToolbar();
         initSwipeView();
         intRecyclerView();
@@ -131,7 +111,10 @@ public class WelfareActivity extends BaseActivity implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        mViewModel.fetchGankList(GankApi.GankDataType.DATA_TYPE_WELFARE,1, Constants.PAGE_SIZE);
+        LiveData<GankList> liveData = mViewModel.fetchGankList(GankApi.GankDataType.DATA_TYPE_WELFARE,1, Constants.PAGE_SIZE);
+        liveData.observe(this,gankList ->  {
+            fetchWelfareListSuccess(gankList,true);
+        });
     }
 
     @Override
@@ -139,7 +122,10 @@ public class WelfareActivity extends BaseActivity implements SwipeRefreshLayout.
         if(!mSwipeRefreshLayout.isRefreshing()){
             int pageIndex = AppUtil.getPageIndex(mAdapter.getItemCount(), Constants.PAGE_SIZE);
             Log.i(TAG,"onLoadMore pageIndex:"+pageIndex);
-            mViewModel.fetchGankList(GankApi.GankDataType.DATA_TYPE_WELFARE,pageIndex,Constants.PAGE_SIZE);
+            LiveData<GankList> liveData = mViewModel.fetchGankList(GankApi.GankDataType.DATA_TYPE_WELFARE,pageIndex,Constants.PAGE_SIZE);
+            liveData.observe(this, gankList -> {
+                fetchWelfareListSuccess(gankList,false);
+            });
         }
     }
 
@@ -160,7 +146,6 @@ public class WelfareActivity extends BaseActivity implements SwipeRefreshLayout.
 
     @Override
     protected void onDestroy() {
-        mViewModel.onDestroy();
         LogUtil.i(TAG,"onDestroy");
         super.onDestroy();
     }

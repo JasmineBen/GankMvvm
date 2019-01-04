@@ -3,13 +3,6 @@ package com.conan.gankmvvm.di.module;
 import android.content.Context;
 
 import com.conan.gankmvvm.GankApplication;
-import com.conan.gankmvvm.data.database.GankOpenDbHelper;
-import com.conan.gankmvvm.data.database.dao.DaoMaster;
-import com.conan.gankmvvm.data.repository.GankRepository;
-import com.conan.gankmvvm.data.repository.IRepository;
-import com.conan.gankmvvm.GankApplication;
-import com.conan.gankmvvm.data.database.GankOpenDbHelper;
-import com.conan.gankmvvm.data.database.dao.DaoMaster;
 import com.conan.gankmvvm.data.repository.GankRepository;
 import com.conan.gankmvvm.data.repository.IRepository;
 
@@ -36,12 +29,6 @@ public class ApplicationModule {
     @Singleton
     Context provideApplicationContext(){
         return this.mApp;
-    }
-
-    @Provides
-    @Singleton
-    DaoMaster.OpenHelper provideOpenDbHelper(){
-       return new GankOpenDbHelper(this.mApp,"gankmvvm");
     }
 
     @Provides

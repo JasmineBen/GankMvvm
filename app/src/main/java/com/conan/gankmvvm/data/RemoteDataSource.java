@@ -1,12 +1,12 @@
 package com.conan.gankmvvm.data;
 
-import com.conan.gankmvvm.model.GankList;
 import com.conan.gankmvvm.data.network.RequestManager;
+import com.conan.gankmvvm.model.GankList;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Observable;
+import retrofit2.Call;
 
 /**
  * Description：网络数据访问接口
@@ -23,7 +23,8 @@ public class RemoteDataSource {
         this.mRequestManager = manager;
     }
 
-    public Observable<GankList> fetchGankList(String type, int pageIndex, int pageSize){
+    public Call<GankList> fetchGankList(String type, int pageIndex, int pageSize){
         return mRequestManager.getApi().getGankList(type,pageSize,pageIndex);
     }
+
 }

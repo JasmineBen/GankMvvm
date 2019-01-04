@@ -1,20 +1,18 @@
 package com.conan.gankmvvm.data;
 
-import com.conan.gankmvvm.model.GankEntity;
-import com.conan.gankmvvm.model.GankList;
-import com.conan.gankmvvm.data.database.dao.DaoMaster;
-import com.conan.gankmvvm.data.database.dao.DaoSession;
-import com.conan.gankmvvm.data.database.dao.GankEntityDao;
+import android.arch.lifecycle.LiveData;
+import android.content.Context;
 
-import org.greenrobot.greendao.query.Query;
+import com.conan.gankmvvm.data.database.GankDatabase;
+import com.conan.gankmvvm.model.GankEntity;
 
 import java.util.List;
-import java.util.concurrent.Callable;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import io.reactivex.Observable;
 
 
 /**
@@ -25,39 +23,21 @@ import io.reactivex.Observable;
 @Singleton
 public class LocalDataSource {
 
-    private DaoSession mSession;
+    private Context applicationContext;
+    private Executor executor = Executors.newCachedThreadPool();
 
     @Inject
-    public LocalDataSource(DaoMaster.OpenHelper openDbHelper) {
-        mSession = new DaoMaster(openDbHelper.getReadableDb()).newSession();
+    public LocalDataSource(Context context) {
+        applicationContext = context.getApplicationContext();
     }
 
-    public Observable<Boolean> cacheGankList(final List<GankEntity> gankDatas) {
-        return Observable.fromCallable(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                mSession.getGankEntityDao().insertOrReplaceInTx(gankDatas);
-                return true;
-            }
+    public void cacheGankList(final List<GankEntity> gankDatas) {
+        executor.execute(()->{
+            GankDatabase.getInstance(applicationContext).gankDao().cacheGankList(gankDatas);
         });
     }
 
-    public Observable<GankList> queryGankList(final String type, final int pageIndex, final int pageSize) {
-        return Observable.fromCallable(new Callable<GankList>() {
-            @Override
-            public GankList call() throws Exception {
-                Query<GankEntity> query = mSession.getGankEntityDao().queryBuilder()
-                        .where(GankEntityDao.Properties.Type.eq(type))
-                        .offset((pageIndex - 1) * pageSize)
-                        .limit(pageSize)
-                        .build();
-                List<GankEntity> gankDatas = query.list();
-                GankList list = new GankList(type);
-                list.setGankDatas(gankDatas);
-                list.setType(type);
-                return list;
-            }
-        });
-
+    public LiveData<List<GankEntity>> queryGankList(final String type, final int pageIndex, final int pageSize) {
+        return GankDatabase.getInstance(applicationContext).gankDao().queryGankList(type,pageIndex,pageSize);
     }
 }

@@ -12,7 +12,6 @@ import javax.inject.Singleton;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -38,7 +37,6 @@ public class RequestManager {
         Gson gson = new GsonBuilder().setDateFormat(GankApi.DATE_FORMAT_CONVERT).create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(GankApi.BASE_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();

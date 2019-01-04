@@ -7,11 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.conan.gankmvvm.R;
-import com.conan.gankmvvm.model.GankList;
 import com.conan.gankmvvm.databinding.ItemWelfareBinding;
-import com.conan.gankmvvm.view.activities.BaseActivity;
-import com.conan.gankmvvm.viewmodel.ViewModelFactory;
-import com.conan.gankmvvm.viewmodel.WelfareViewModel;
 import com.conan.gankmvvm.model.GankList;
 import com.conan.gankmvvm.view.activities.BaseActivity;
 import com.conan.gankmvvm.viewmodel.ViewModelFactory;

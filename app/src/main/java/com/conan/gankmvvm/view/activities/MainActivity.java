@@ -17,15 +17,12 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.conan.gankmvvm.R;
-import com.conan.gankmvvm.model.MainTab;
 import com.conan.gankmvvm.databinding.ActivityMainBinding;
+import com.conan.gankmvvm.model.MainTab;
 import com.conan.gankmvvm.utils.AppUtil;
 import com.conan.gankmvvm.utils.GlideApp;
 import com.conan.gankmvvm.utils.LogUtil;
 import com.conan.gankmvvm.view.adapter.MainTabPagerAdapter;
-import com.conan.gankmvvm.model.MainTab;
-import com.conan.gankmvvm.utils.AppUtil;
-import com.conan.gankmvvm.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;

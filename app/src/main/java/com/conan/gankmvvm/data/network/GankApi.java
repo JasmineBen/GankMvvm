@@ -2,7 +2,7 @@ package com.conan.gankmvvm.data.network;
 
 import com.conan.gankmvvm.model.GankList;
 
-import io.reactivex.Observable;
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -34,5 +34,5 @@ public interface GankApi {
     }
 
     @GET("data/{type}/{pageSize}/{pageIndex}")
-    Observable<GankList> getGankList(@Path("type") String type, @Path("pageSize") int pageSize, @Path("pageIndex") int pageIndex);
+    Call<GankList> getGankList(@Path("type") String type, @Path("pageSize") int pageSize, @Path("pageIndex") int pageIndex);
 }

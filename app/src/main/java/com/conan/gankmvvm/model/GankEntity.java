@@ -1,14 +1,11 @@
 package com.conan.gankmvvm.model;
 
-import com.conan.gankmvvm.BuildConfig;
-import com.conan.gankmvvm.data.database.StringToListConvert;
-import com.conan.gankmvvm.data.database.StringToListConvert;
-import com.google.gson.annotations.SerializedName;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
-import org.greenrobot.greendao.annotation.Convert;
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Id;
+import com.conan.gankmvvm.BuildConfig;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
@@ -22,8 +19,9 @@ import java.util.List;
 @Entity
 public class GankEntity{
 
-    @Id
+    @PrimaryKey
     @SerializedName("_id")
+    @NonNull
     private String id;
     
     @SerializedName("createdAt")
@@ -50,27 +48,9 @@ public class GankEntity{
     @SerializedName("who")
     private String publisher;
 
-    @Convert(converter = StringToListConvert.class, columnType = String.class)
     @SerializedName("images")
     private List<String> images;
 
-    @Generated(hash = 1200370093)
-    public GankEntity(String id, Date createdTime, String desc, String type,
-            Date publishedTime, String source, String url, boolean used,
-            String publisher, List<String> images) {
-        this.id = id;
-        this.createdTime = createdTime;
-        this.desc = desc;
-        this.type = type;
-        this.publishedTime = publishedTime;
-        this.source = source;
-        this.url = url;
-        this.used = used;
-        this.publisher = publisher;
-        this.images = images;
-    }
-
-    @Generated(hash = 598526695)
     public GankEntity() {
     }
 
@@ -122,10 +102,6 @@ public class GankEntity{
         this.url = url;
     }
 
-    public boolean isUsed() {
-        return used;
-    }
-
     public void setUsed(boolean used) {
         this.used = used;
     }
@@ -144,18 +120,6 @@ public class GankEntity{
 
     public void setImages(List<String> images) {
         this.images = images;
-    }
-
-    @Override
-    public int hashCode() {
-        int hashCode = 0;
-        if (hashCode == 0 && id.length() > 0) {
-            char val[] = id.toCharArray();
-            for (int i = 0; i < id.length(); i++) {
-                hashCode = 31 * hashCode + val[i];
-            }
-        }
-        return hashCode;
     }
 
     @Override
