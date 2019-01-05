@@ -6,9 +6,9 @@ import android.content.Context;
 import com.conan.gankmvvm.data.database.GankDatabase;
 import com.conan.gankmvvm.model.GankEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
@@ -33,7 +33,23 @@ public class LocalDataSource {
 
     public void cacheGankList(final List<GankEntity> gankDatas) {
         executor.execute(()->{
-            GankDatabase.getInstance(applicationContext).gankDao().cacheGankList(gankDatas);
+            List<GankEntity> toBeInsert = new ArrayList<>();
+            List<GankEntity> toBeUpdate = new ArrayList<>();
+            if(gankDatas != null){
+                for(GankEntity entity : gankDatas){
+                    if(GankDatabase.getInstance(applicationContext).gankDao().checkExist(entity.getId()) != null){
+                        toBeUpdate.add(entity);
+                    }else{
+                        toBeInsert.add(entity);
+                    }
+                }
+                if(toBeInsert.size() > 0){
+                    GankDatabase.getInstance(applicationContext).gankDao().saveGankList(toBeInsert);
+                }
+                if(toBeUpdate.size() > 0){
+                    GankDatabase.getInstance(applicationContext).gankDao().updateGankList(toBeUpdate);
+                }
+            }
         });
     }
 

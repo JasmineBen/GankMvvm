@@ -6,6 +6,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.conan.gankmvvm.model.GankEntity;
 import com.conan.gankmvvm.model.GankList;
@@ -19,7 +20,13 @@ import java.util.List;
 public interface GankDao {
 
     @Insert
-    void cacheGankList(final List<GankEntity> gankDatas) ;
+    void saveGankList(final List<GankEntity> datas) ;
+
+    @Query("SELECT * FROM gankentity WHERE id=:id")
+    GankEntity checkExist(String id);
+
+    @Update
+    void updateGankList(final List<GankEntity> datas);
 
     @Query("SELECT * FROM gankentity WHERE type = :type limit :pageSize offset :pageSize*(:pageIndex-1)")
     LiveData<List<GankEntity>> queryGankList(final String type, final int pageIndex, final int pageSize);
