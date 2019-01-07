@@ -4,16 +4,13 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Environment;
-import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
-import android.view.View;
 
-import com.conan.gankmvvm.data.network.GankApi;
 import com.conan.gankmvvm.data.network.GankApi;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import androidx.core.content.ContextCompat;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**

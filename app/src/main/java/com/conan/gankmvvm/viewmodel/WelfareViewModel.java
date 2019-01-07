@@ -1,13 +1,14 @@
 package com.conan.gankmvvm.viewmodel;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.databinding.ObservableField;
-import android.support.annotation.NonNull;
 
 import com.conan.gankmvvm.model.GankEntity;
 
-public class WelfareViewModel extends AndroidViewModel{
+import androidx.annotation.NonNull;
+import androidx.databinding.ObservableField;
+import androidx.lifecycle.AndroidViewModel;
+
+public class WelfareViewModel extends AndroidViewModel {
 
     public final ObservableField<GankEntity> entity = new ObservableField<>();
 

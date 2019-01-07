@@ -1,16 +1,14 @@
 package com.conan.gankmvvm.view.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 
 import com.conan.gankmvvm.GankApplication;
 import com.conan.gankmvvm.di.component.DaggerFragmentComponent;
 import com.conan.gankmvvm.di.component.FragmentComponent;
 import com.conan.gankmvvm.di.module.FragmentModule;
-import com.conan.gankmvvm.GankApplication;
-import com.conan.gankmvvm.di.component.FragmentComponent;
-import com.conan.gankmvvm.di.module.FragmentModule;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 /**
  * Description：基类Fragment

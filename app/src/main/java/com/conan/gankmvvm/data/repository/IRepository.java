@@ -1,14 +1,11 @@
 package com.conan.gankmvvm.data.repository;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-
 import com.conan.gankmvvm.model.GankEntity;
 import com.conan.gankmvvm.model.GankList;
 
 import java.util.List;
 
-import io.reactivex.Observer;
+import androidx.lifecycle.LiveData;
 
 /**
  * Description：资源层接口

@@ -1,7 +1,5 @@
 package com.conan.gankmvvm.data.repository;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
 import com.conan.gankmvvm.data.LocalDataSource;
@@ -14,6 +12,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,12 +28,30 @@ public class GankRepository implements IRepository{
 
     private LocalDataSource mLocalDataSource;
     private RemoteDataSource mRemoteDataSource;
+    public static final int FIRST_PAGE = 1;
+//    private int mPage = FIRST_PAGE;
+//    private LiveData<PagedList<GankEntity>> mLiveData;
 
     @Inject
     public GankRepository(LocalDataSource localDataSource,RemoteDataSource remoteDataSource){
         this.mLocalDataSource = localDataSource;
         this.mRemoteDataSource = remoteDataSource;
+//        initPageList();
     }
+
+//    private void initPageList() {
+//        final PositionalDataSource<GankList> positionalDataSource = new PositionalDataSource<GankList>() {
+//            @Override
+//            public void loadInitial(@NonNull LoadInitialParams params, @NonNull LoadInitialCallback<GankList> callback) {
+//
+//            }
+//
+//            @Override
+//            public void loadRange(@NonNull LoadRangeParams params, @NonNull LoadRangeCallback<GankList> callback) {
+//
+//            }
+//        };
+//    }
 
     @Override
     public LiveData<GankList> getRemoteGankList(String type, int pageIndex, int pageSize){

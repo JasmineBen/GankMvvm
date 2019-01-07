@@ -2,13 +2,10 @@ package com.conan.gankmvvm.viewmodel;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.VisibleForTesting;
 
-import com.conan.gankmvvm.data.repository.GankRepository;
-
-import javax.inject.Inject;
+import androidx.annotation.VisibleForTesting;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory{
     @SuppressLint("StaticFieldLeak")

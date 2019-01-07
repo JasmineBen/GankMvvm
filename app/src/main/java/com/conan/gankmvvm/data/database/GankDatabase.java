@@ -1,13 +1,14 @@
 package com.conan.gankmvvm.data.database;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.conan.gankmvvm.data.database.dao.GankDao;
 import com.conan.gankmvvm.model.GankEntity;
+
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 @Database(entities = {GankEntity.class},version =1,exportSchema = false)
 @TypeConverters({Converts.class})

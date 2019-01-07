@@ -1,14 +1,8 @@
 package com.conan.gankmvvm.view.fragments;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +26,13 @@ import com.conan.gankmvvm.widget.GankRecyclerView;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * Description：TabFragment
@@ -128,7 +129,7 @@ public class MainTabFragment extends BaseFragment implements SwipeRefreshLayout.
     private void intRecyclerView() {
         mRecyclerView = mBinding.recyclerview;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());

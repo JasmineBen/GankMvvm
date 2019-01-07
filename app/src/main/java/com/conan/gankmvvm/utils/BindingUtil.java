@@ -1,21 +1,17 @@
 package com.conan.gankmvvm.utils;
 
-import android.databinding.BindingAdapter;
-import android.databinding.BindingConversion;
-import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.BitmapEncoder;
 import com.conan.gankmvvm.R;
-import com.conan.gankmvvm.utils.GlideApp;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.BindingConversion;
 
 public class BindingUtil {
 

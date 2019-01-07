@@ -1,7 +1,5 @@
 package com.conan.gankmvvm.view.adapter;
 
-import android.databinding.DataBindingUtil;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -14,6 +12,9 @@ import com.conan.gankmvvm.viewmodel.ViewModelFactory;
 import com.conan.gankmvvm.viewmodel.WelfareViewModel;
 
 import javax.inject.Inject;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Description：福利Adapter

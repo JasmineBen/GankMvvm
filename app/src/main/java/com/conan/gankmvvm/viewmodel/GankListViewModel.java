@@ -1,9 +1,6 @@
 package com.conan.gankmvvm.viewmodel;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
 
 import com.conan.gankmvvm.GankApplication;
 import com.conan.gankmvvm.data.network.GankApi;
@@ -15,6 +12,10 @@ import com.conan.gankmvvm.utils.LogUtil;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 public class GankListViewModel extends AndroidViewModel {
 

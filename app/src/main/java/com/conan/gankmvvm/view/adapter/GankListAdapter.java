@@ -1,23 +1,21 @@
 package com.conan.gankmvvm.view.adapter;
 
-import android.databinding.DataBindingUtil;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.conan.gankmvvm.R;
-import com.conan.gankmvvm.model.GankList;
 import com.conan.gankmvvm.databinding.GankItemLayoutBinding;
+import com.conan.gankmvvm.model.GankList;
 import com.conan.gankmvvm.view.activities.BaseActivity;
 import com.conan.gankmvvm.view.listener.OnItemClickListener;
 import com.conan.gankmvvm.viewmodel.GankItemViewModel;
 import com.conan.gankmvvm.viewmodel.ViewModelFactory;
-import com.conan.gankmvvm.model.GankList;
-import com.conan.gankmvvm.view.activities.BaseActivity;
-import com.conan.gankmvvm.viewmodel.ViewModelFactory;
 
 import javax.inject.Inject;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class GankListAdapter extends RecyclerView.Adapter<GankListAdapter.BindingHolder>{
 

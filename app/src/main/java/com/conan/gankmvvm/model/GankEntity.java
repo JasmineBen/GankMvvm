@@ -1,14 +1,14 @@
 package com.conan.gankmvvm.model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
-
 import com.conan.gankmvvm.BuildConfig;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 
 /**
@@ -54,10 +54,12 @@ public class GankEntity{
     public GankEntity() {
     }
 
+    @NonNull
     public String getId() {
         return id;
     }
 
+    @NonNull
     public void setId(String id) {
         this.id = id;
     }

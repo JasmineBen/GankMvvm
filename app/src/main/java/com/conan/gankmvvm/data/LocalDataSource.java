@@ -1,6 +1,5 @@
 package com.conan.gankmvvm.data;
 
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
 import com.conan.gankmvvm.data.database.GankDatabase;
@@ -13,6 +12,8 @@ import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import androidx.lifecycle.LiveData;
 
 
 /**

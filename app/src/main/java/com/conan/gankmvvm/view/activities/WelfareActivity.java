@@ -1,22 +1,14 @@
 package com.conan.gankmvvm.view.activities;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
 import com.conan.gankmvvm.R;
-import com.conan.gankmvvm.model.GankList;
 import com.conan.gankmvvm.data.network.GankApi;
 import com.conan.gankmvvm.databinding.WelfareLayoutBinding;
+import com.conan.gankmvvm.model.GankList;
 import com.conan.gankmvvm.utils.AppUtil;
 import com.conan.gankmvvm.utils.Constants;
 import com.conan.gankmvvm.utils.LogUtil;
@@ -27,6 +19,13 @@ import com.conan.gankmvvm.widget.GankRecyclerView;
 import com.conan.gankmvvm.widget.WelfareItemDecoration;
 
 import javax.inject.Inject;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * Description：福利Activity

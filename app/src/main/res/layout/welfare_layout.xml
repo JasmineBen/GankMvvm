@@ -9,12 +9,12 @@
             type="com.conan.gankmvvm.viewmodel.GankListViewModel"/>
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="true">
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
@@ -23,9 +23,9 @@
                 android:id="@+id/welfare_toolbar"
                 layout="@layout/include_toolbar" />
 
-        </android.support.design.widget.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,6 +36,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </android.support.v4.widget.SwipeRefreshLayout>
-    </android.support.design.widget.CoordinatorLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -1,15 +1,13 @@
 package com.conan.gankmvvm.view.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-
-import com.conan.gankmvvm.view.activities.BaseActivity;
 import com.conan.gankmvvm.model.MainTab;
+import com.conan.gankmvvm.view.activities.BaseActivity;
 import com.conan.gankmvvm.view.fragments.MainTabFragment;
-import com.conan.gankmvvm.model.MainTab;
-import com.conan.gankmvvm.view.activities.BaseActivity;
 
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 /**
  * Description：主界面PagerAdapter

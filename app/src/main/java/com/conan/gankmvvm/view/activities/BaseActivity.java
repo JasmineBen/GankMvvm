@@ -2,8 +2,6 @@ package com.conan.gankmvvm.view.activities;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,6 +14,8 @@ import com.conan.gankmvvm.di.module.ActivityModule;
 import com.conan.gankmvvm.utils.LogUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;

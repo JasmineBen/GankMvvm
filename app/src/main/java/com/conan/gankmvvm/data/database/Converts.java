@@ -1,6 +1,5 @@
 package com.conan.gankmvvm.data.database;
 
-import android.arch.persistence.room.TypeConverter;
 import android.text.TextUtils;
 
 import org.json.JSONArray;
@@ -9,10 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import androidx.room.TypeConverter;
+
 public class Converts {
 
     @TypeConverter
-
     public static Date toDate(Long timestamp) {
         return timestamp == null ? null : new Date(timestamp);
     }
