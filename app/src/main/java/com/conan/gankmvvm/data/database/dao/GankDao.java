@@ -7,6 +7,9 @@ import com.conan.gankmvvm.model.GankEntity;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.TiledDataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -27,8 +30,7 @@ public interface GankDao {
     @Update
     void updateGankList(final List<GankEntity> datas);
 
-    @Query("SELECT * FROM gankentity WHERE type = :type limit :pageSize offset :pageSize*(:pageIndex-1)")
-    LiveData<List<GankEntity>> queryGankList(final String type, final int pageIndex, final int pageSize);
-
+    @Query("SELECT * FROM gankentity WHERE type = :type")
+    DataSource.Factory<Integer,GankEntity> queryGankList(final String type);
     
 }

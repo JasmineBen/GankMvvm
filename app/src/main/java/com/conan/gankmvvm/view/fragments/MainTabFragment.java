@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +11,16 @@ import android.view.ViewGroup;
 import com.conan.gankmvvm.R;
 import com.conan.gankmvvm.data.network.GankApi;
 import com.conan.gankmvvm.databinding.GankListLayoutBinding;
-import com.conan.gankmvvm.model.GankEntity;
-import com.conan.gankmvvm.model.GankList;
 import com.conan.gankmvvm.utils.AppUtil;
 import com.conan.gankmvvm.utils.Constants;
 import com.conan.gankmvvm.utils.LogUtil;
 import com.conan.gankmvvm.view.adapter.GankListAdapter;
-import com.conan.gankmvvm.view.listener.OnItemClickListener;
 import com.conan.gankmvvm.viewmodel.GankListViewModel;
 import com.conan.gankmvvm.viewmodel.ViewModelFactory;
-import com.conan.gankmvvm.widget.GankRecyclerView;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +32,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
  * Time：2017/10/31
  */
 
-public class MainTabFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,GankRecyclerView.OnLoadMoreListener {
+public class MainTabFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = MainTabFragment.class.getSimpleName();
 
@@ -48,7 +40,7 @@ public class MainTabFragment extends BaseFragment implements SwipeRefreshLayout.
 
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    GankRecyclerView mRecyclerView;
+    RecyclerView mRecyclerView;
 
     @Inject
     GankListAdapter mAdapter;
@@ -79,6 +71,9 @@ public class MainTabFragment extends BaseFragment implements SwipeRefreshLayout.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = GankListLayoutBinding.inflate(inflater,container,false);
         mViewModel = obtainViewModel();
+        LogUtil.i(TAG, "onCreateView " + mDataType);
+        mViewModel.setDataType(mDataType);
+        mViewModel.initPageList();
         mBinding.setViewmodel(mViewModel);
         initViews();
         return mBinding.getRoot();
@@ -86,33 +81,8 @@ public class MainTabFragment extends BaseFragment implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        LiveData<GankList> liveData = mViewModel.fetchGankList(mDataType, 1, Constants.PAGE_SIZE);
-        liveData.observe(this,gankList->{
-            Log.i("zpy","onRefresh result:"+gankList);
-            if(gankList == null && mAdapter.getItemCount() == 0){
-                LiveData<List<GankEntity>> cachedList = mViewModel.fetchCacheList(mDataType,1,Constants.PAGE_SIZE);
-                cachedList.observe(MainTabFragment.this, gankEntities ->  {
-                    GankList data = new GankList(mDataType.getDataType());
-                    data.addItems(gankEntities);
-                    fetchGankListSuccess(data, 1);
-                });
-
-            }else {
-                fetchGankListSuccess(gankList, 1);
-            }
-        });
-    }
-
-    @Override
-    public void onLoadMore() {
-        if(!mSwipeRefreshLayout.isRefreshing()) {
-            final int pageIndex = AppUtil.getPageIndex(mAdapter.getItemCount(),
-                    Constants.PAGE_SIZE);
-            LiveData<GankList> liveData = mViewModel.fetchGankList(mDataType, pageIndex, Constants.PAGE_SIZE);
-            liveData.observe(this,gankList->{
-                fetchGankListSuccess(gankList,pageIndex);
-            });
-        }
+        mViewModel.forceRefresh();
+        observeLiveData();
     }
 
     @Override
@@ -134,17 +104,13 @@ public class MainTabFragment extends BaseFragment implements SwipeRefreshLayout.
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setOnLoadMoreListener(this);
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(GankEntity gank) {
-                if(!TextUtils.isEmpty(gank.getUrl())){
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    Uri uri = Uri.parse(gank.getUrl());
-                    intent.setData(uri);
-                    startActivity(intent);
-                }
+        mAdapter.setOnItemClickListener(gank -> {
+            if(!TextUtils.isEmpty(gank.getUrl())){
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                Uri uri = Uri.parse(gank.getUrl());
+                intent.setData(uri);
+                startActivity(intent);
             }
         });
     }
@@ -157,12 +123,14 @@ public class MainTabFragment extends BaseFragment implements SwipeRefreshLayout.
     }
 
     private void initData(){
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                onRefresh();
-            }
+        mSwipeRefreshLayout.setRefreshing(true);
+        observeLiveData();
+    }
+
+    private void observeLiveData() {
+        mViewModel.getLiveData().observe(this, gankEntities -> {
+            mAdapter.submitList(gankEntities);
+            mSwipeRefreshLayout.setRefreshing(false);
         });
     }
 
@@ -172,19 +140,4 @@ public class MainTabFragment extends BaseFragment implements SwipeRefreshLayout.
         return viewModel;
     }
 
-    private void fetchGankListSuccess(GankList gankList, int pageIndex) {
-        Log.i("zpy","fetchGankListSuccess:"+gankList);
-        if(gankList == null){
-            fetchGankListComplete();
-            return;
-        }
-        mAdapter.setData(gankList,pageIndex == 1);
-        fetchGankListComplete();
-    }
-
-
-    private void fetchGankListComplete() {
-        mSwipeRefreshLayout.setRefreshing(false);
-        mRecyclerView.setLoadMoreComplete();
-    }
 }

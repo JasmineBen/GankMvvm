@@ -8,6 +8,7 @@ import android.view.View;
 import com.conan.gankmvvm.R;
 import com.conan.gankmvvm.data.network.GankApi;
 import com.conan.gankmvvm.databinding.WelfareLayoutBinding;
+import com.conan.gankmvvm.model.GankEntity;
 import com.conan.gankmvvm.model.GankList;
 import com.conan.gankmvvm.utils.AppUtil;
 import com.conan.gankmvvm.utils.Constants;
@@ -17,6 +18,8 @@ import com.conan.gankmvvm.viewmodel.GankListViewModel;
 import com.conan.gankmvvm.viewmodel.ViewModelFactory;
 import com.conan.gankmvvm.widget.GankRecyclerView;
 import com.conan.gankmvvm.widget.WelfareItemDecoration;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -59,6 +62,7 @@ public class WelfareActivity extends BaseActivity implements SwipeRefreshLayout.
     private void initViews(){
         mBinding = DataBindingUtil.setContentView(this,R.layout.welfare_layout);
         mViewModel = obtainViewModel();
+        mViewModel.setDataType(GankApi.GankDataType.DATA_TYPE_WELFARE);
         mBinding.setViewmodel(mViewModel);
         customToolbar();
         initSwipeView();
@@ -110,26 +114,26 @@ public class WelfareActivity extends BaseActivity implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        LiveData<GankList> liveData = mViewModel.fetchGankList(GankApi.GankDataType.DATA_TYPE_WELFARE,1, Constants.PAGE_SIZE);
-        liveData.observe(this,gankList ->  {
-            fetchWelfareListSuccess(gankList,true);
-        });
+//        LiveData<List<GankEntity>> liveData = mViewModel.fetchGankList(GankApi.GankDataType.DATA_TYPE_WELFARE,1, Constants.PAGE_SIZE);
+//        liveData.observe(this,gankList ->  {
+//            fetchWelfareListSuccess(gankList,true);
+//        });
     }
 
     @Override
     public void onLoadMore() {
         if(!mSwipeRefreshLayout.isRefreshing()){
-            int pageIndex = AppUtil.getPageIndex(mAdapter.getItemCount(), Constants.PAGE_SIZE);
-            Log.i(TAG,"onLoadMore pageIndex:"+pageIndex);
-            LiveData<GankList> liveData = mViewModel.fetchGankList(GankApi.GankDataType.DATA_TYPE_WELFARE,pageIndex,Constants.PAGE_SIZE);
-            liveData.observe(this, gankList -> {
-                fetchWelfareListSuccess(gankList,false);
-            });
+//            int pageIndex = AppUtil.getPageIndex(mAdapter.getItemCount(), Constants.PAGE_SIZE);
+//            Log.i(TAG,"onLoadMore pageIndex:"+pageIndex);
+//            LiveData<List<GankEntity>> liveData = mViewModel.fetchGankList(GankApi.GankDataType.DATA_TYPE_WELFARE,pageIndex,Constants.PAGE_SIZE);
+//            liveData.observe(this, gankList -> {
+//                fetchWelfareListSuccess(gankList,false);
+//            });
         }
     }
 
-    public void fetchWelfareListSuccess(GankList gankList, boolean refresh) {
-        if(gankList == null){
+    public void fetchWelfareListSuccess(List<GankEntity> gankList, boolean refresh) {
+        if(gankList == null || gankList.size() == 0){
             fetchGankistComplete();
             return;
         }

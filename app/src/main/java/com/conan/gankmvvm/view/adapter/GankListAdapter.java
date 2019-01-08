@@ -1,13 +1,13 @@
 package com.conan.gankmvvm.view.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.conan.gankmvvm.R;
 import com.conan.gankmvvm.databinding.GankItemLayoutBinding;
-import com.conan.gankmvvm.model.GankList;
+import com.conan.gankmvvm.model.GankEntity;
 import com.conan.gankmvvm.view.activities.BaseActivity;
+import com.conan.gankmvvm.view.listener.GankItemCallback;
 import com.conan.gankmvvm.view.listener.OnItemClickListener;
 import com.conan.gankmvvm.viewmodel.GankItemViewModel;
 import com.conan.gankmvvm.viewmodel.ViewModelFactory;
@@ -15,39 +15,22 @@ import com.conan.gankmvvm.viewmodel.ViewModelFactory;
 import javax.inject.Inject;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class GankListAdapter extends RecyclerView.Adapter<GankListAdapter.BindingHolder>{
+public class GankListAdapter extends PagedListAdapter<GankEntity,GankListAdapter.BindingHolder> {
 
     private BaseActivity mActivity;
-    private GankList mData;
     private OnItemClickListener mItemClickListener;
 
     @Inject
     public GankListAdapter(BaseActivity activity) {
+        super(new GankItemCallback());
         mActivity = activity;
     }
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener){
         this.mItemClickListener = itemClickListener;
-    }
-
-    public void setData(GankList data,boolean refresh){
-        int position = 0;
-        if(mData == null) {
-            this.mData = data;
-        }else{
-            if(refresh){
-                mData.clear();
-            }
-            position = mData.size();
-            mData.addItems(data.getGankDatas());
-        }
-        if(refresh){
-            notifyDataSetChanged();
-        }else {
-            notifyItemInserted(position);
-        }
     }
 
     @Override
@@ -63,25 +46,12 @@ public class GankListAdapter extends RecyclerView.Adapter<GankListAdapter.Bindin
     public void onBindViewHolder(BindingHolder holder, int position) {
         GankItemLayoutBinding binding = holder.binding;
         GankItemViewModel viewModel = ViewModelFactory.getInstance(mActivity.getApplication()).create(GankItemViewModel.class);
-        viewModel.setData(mData.getItem(position));
+        viewModel.setData(getItem(position));
         binding.setViewmodel(viewModel);
         if(mItemClickListener != null){
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mItemClickListener.onItemClick(mData.getItem(position));
-                }
-            });
+            holder.itemView.setOnClickListener(view ->  mItemClickListener.onItemClick(getItem(position)));
         }
     }
-
-
-    @Override
-    public int getItemCount() {
-        return mData != null ? mData.size() : 0;
-    }
-
-
 
     public static class BindingHolder extends RecyclerView.ViewHolder {
         private GankItemLayoutBinding binding;

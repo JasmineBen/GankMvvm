@@ -13,8 +13,6 @@ import java.util.concurrent.Executors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import androidx.lifecycle.LiveData;
-
 
 /**
  * Description：本地数据访问接口
@@ -54,7 +52,4 @@ public class LocalDataSource {
         });
     }
 
-    public LiveData<List<GankEntity>> queryGankList(final String type, final int pageIndex, final int pageSize) {
-        return GankDatabase.getInstance(applicationContext).gankDao().queryGankList(type,pageIndex,pageSize);
-    }
 }

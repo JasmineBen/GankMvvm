@@ -3,7 +3,10 @@ package com.conan.gankmvvm.utils;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Environment;
+import android.util.Log;
 
 import com.conan.gankmvvm.data.network.GankApi;
 
@@ -21,7 +24,7 @@ import io.reactivex.disposables.CompositeDisposable;
 public class AppUtil {
 
     public static int getPageIndex(int currentCount, int pageSize) {
-        return currentCount / pageSize + 1;
+        return currentCount / pageSize + Constants.FIRST_PAGE;
     }
 
     public static String parseSimpleDate(Date date) {
@@ -75,6 +78,19 @@ public class AppUtil {
 
     public static int getColumnWidth(Context context, int columns, int itemDecoration) {
         return (getScreenWith(context) - (columns + 1) * itemDecoration) / columns;
+    }
+
+    public static boolean isNetworkConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            if (mNetworkInfo != null) {
+                Log.i("zpy","NetworkConnected");
+                return mNetworkInfo.isAvailable();
+            }
+        }
+        return false;
     }
 
 }

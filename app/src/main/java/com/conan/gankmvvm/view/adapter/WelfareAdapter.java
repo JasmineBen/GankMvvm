@@ -6,10 +6,13 @@ import android.view.ViewGroup;
 
 import com.conan.gankmvvm.R;
 import com.conan.gankmvvm.databinding.ItemWelfareBinding;
-import com.conan.gankmvvm.model.GankList;
+import com.conan.gankmvvm.model.GankEntity;
 import com.conan.gankmvvm.view.activities.BaseActivity;
 import com.conan.gankmvvm.viewmodel.ViewModelFactory;
 import com.conan.gankmvvm.viewmodel.WelfareViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -24,26 +27,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.BindingHolder> {
 
-    private GankList mWelfareData;
+    private List<GankEntity> mWelfareData;
     private BaseActivity mActivity;
 
     @Inject
     public WelfareAdapter(BaseActivity activity) {
         this.mActivity = activity;
+        mWelfareData = new ArrayList<>();
     }
 
-    public void setData(GankList data, boolean refresh) {
+    public void setData(List<GankEntity> data, boolean refresh) {
         Log.i("zpy","setData:"+refresh);
         int position = 0;
-        if(mWelfareData == null) {
-            this.mWelfareData = data;
-        }else{
-            if(refresh){
-                mWelfareData.clear();
-            }
-            position = mWelfareData.size();
-            mWelfareData.addItems(data.getGankDatas());
+        if(refresh){
+            mWelfareData.clear();
         }
+        position = mWelfareData.size();
+        mWelfareData.addAll(data);
         if(refresh){
             notifyDataSetChanged();
         }else {
@@ -70,7 +70,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.BindingH
     public void onBindViewHolder(BindingHolder holder, int position) {
         ItemWelfareBinding binding = holder.binding;
         WelfareViewModel viewModel = ViewModelFactory.getInstance(mActivity.getApplication()).create(WelfareViewModel.class);
-        viewModel.setData(mWelfareData.getItem(position));
+        viewModel.setData(mWelfareData.get(position));
         binding.setViewmodel(viewModel);
     }
 

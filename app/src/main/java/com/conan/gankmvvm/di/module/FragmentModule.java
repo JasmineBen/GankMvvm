@@ -1,7 +1,7 @@
 package com.conan.gankmvvm.di.module;
 
-import com.conan.gankmvvm.view.activities.BaseActivity;
 import com.conan.gankmvvm.di.scope.PerFragment;
+import com.conan.gankmvvm.view.activities.BaseActivity;
 import com.conan.gankmvvm.view.fragments.BaseFragment;
 
 import dagger.Module;
@@ -33,5 +33,4 @@ public class FragmentModule {
     public BaseFragment provideFragment() {
         return mFragment;
     }
-
 }

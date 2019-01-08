@@ -1,7 +1,7 @@
 package com.conan.gankmvvm.data.repository;
 
 import com.conan.gankmvvm.model.GankEntity;
-import com.conan.gankmvvm.model.GankList;
+import com.conan.gankmvvm.viewmodel.GankListViewModel;
 
 import java.util.List;
 
@@ -14,10 +14,5 @@ import androidx.lifecycle.LiveData;
  */
 
 public interface IRepository {
-    LiveData<GankList> getRemoteGankList(String type, int pageIndex, int pageSize);
-
-    LiveData<List<GankEntity>> getLocalGankList(String type, int pageIndex, int pageSize);
-
-    void cacheGankList(GankList gankList);
-
+    void getRemoteGankList(String type, int pageIndex, int pageSize, GankListViewModel.ILoadedlistener listener);
 }
