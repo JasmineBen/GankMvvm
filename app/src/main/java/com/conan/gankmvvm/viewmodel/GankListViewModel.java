@@ -8,8 +8,10 @@ import com.conan.gankmvvm.data.database.GankDatabase;
 import com.conan.gankmvvm.data.network.GankApi;
 import com.conan.gankmvvm.data.repository.IRepository;
 import com.conan.gankmvvm.model.GankEntity;
+import com.conan.gankmvvm.model.GankList;
 import com.conan.gankmvvm.utils.AppUtil;
 import com.conan.gankmvvm.utils.Constants;
+import com.conan.gankmvvm.utils.LogUtil;
 
 import java.util.List;
 
@@ -107,6 +109,10 @@ public class GankListViewModel extends AndroidViewModel {
         public DataSource create() {
             return mPositionDataSource;
         }
+    }
+
+    public LiveData<List<GankEntity>> fetchGankList(final GankApi.GankDataType type, final int pageIndex, final int pageSize){
+        return mRepository.getRemoteGankList(type.getDataType(), pageIndex, pageSize);
     }
 
     public interface ILoadedlistener{

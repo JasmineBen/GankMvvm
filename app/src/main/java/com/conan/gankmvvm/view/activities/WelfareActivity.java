@@ -114,21 +114,21 @@ public class WelfareActivity extends BaseActivity implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-//        LiveData<List<GankEntity>> liveData = mViewModel.fetchGankList(GankApi.GankDataType.DATA_TYPE_WELFARE,1, Constants.PAGE_SIZE);
-//        liveData.observe(this,gankList ->  {
-//            fetchWelfareListSuccess(gankList,true);
-//        });
+        LiveData<List<GankEntity>> liveData = mViewModel.fetchGankList(GankApi.GankDataType.DATA_TYPE_WELFARE,1, Constants.PAGE_SIZE);
+        liveData.observe(this,gankList ->  {
+            fetchWelfareListSuccess(gankList,true);
+        });
     }
 
     @Override
     public void onLoadMore() {
         if(!mSwipeRefreshLayout.isRefreshing()){
-//            int pageIndex = AppUtil.getPageIndex(mAdapter.getItemCount(), Constants.PAGE_SIZE);
-//            Log.i(TAG,"onLoadMore pageIndex:"+pageIndex);
-//            LiveData<List<GankEntity>> liveData = mViewModel.fetchGankList(GankApi.GankDataType.DATA_TYPE_WELFARE,pageIndex,Constants.PAGE_SIZE);
-//            liveData.observe(this, gankList -> {
-//                fetchWelfareListSuccess(gankList,false);
-//            });
+            int pageIndex = AppUtil.getPageIndex(mAdapter.getItemCount(), Constants.PAGE_SIZE);
+            Log.i(TAG,"onLoadMore pageIndex:"+pageIndex);
+            LiveData<List<GankEntity>> liveData = mViewModel.fetchGankList(GankApi.GankDataType.DATA_TYPE_WELFARE,pageIndex,Constants.PAGE_SIZE);
+            liveData.observe(this, gankList -> {
+                fetchWelfareListSuccess(gankList,false);
+            });
         }
     }
 
